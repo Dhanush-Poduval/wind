@@ -1,0 +1,26 @@
+# Zephyr build output
+build/
+zephyr/
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# West
+.west/
+
+# VS Code
+.vscode/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Swap files
+*.swp
+*.swo
+
+# Logs
+*.log

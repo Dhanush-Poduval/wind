@@ -1,0 +1,15 @@
+/{
+        aliases{
+          my-led=&led_1;
+        };
+
+        leds: leds {
+          compatible="gpio-leds";
+          led_1:d5{
+            gpios=<&gpioe 1  GPIO_ACTIVE_HIGH>;
+
+          };
+        };
+
+};
+
