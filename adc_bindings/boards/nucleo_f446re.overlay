@@ -2,9 +2,17 @@
   aliases {
     my-adc= &adc1;
     my-adc-channel=&adc0_ch0;
+    light-control=&adc1;
+    light-control-channel=&adc123_ch13;
+    my-led=&green_led;
   };
 };
+&green_led {
+	led0:led0{
+	  gpios=<&gpioa 5 GPIO_ACTIVE_HIGH>;
+	}
 
+};
 &adc1 {
    status="okay";
    #address-cells=<1>;
@@ -12,12 +20,20 @@
    st,adc-prescaler=<4>;
    adc0_ch0:adc0_ch0@18{
      reg=<18>;
-     reg = <18>;
      zephyr,gain = "ADC_GAIN_1";
      zephyr,reference = "ADC_REF_INTERNAL";
      zephyr,acquisition-time = <ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS, 50)>;
      zephyr,resolution = <12>;
      zephyr,vref-mv=<3300>;
+   };
+   adc123_ch13:adc123_ch13@13{
+     reg=<13>;
+     zephyr,gain="ADC_GAIN_1";
+     zephyr,reference="ADC_REF_INTERNAL";
+     zephyr,aquisition-time=ADC_ACQ_TIME_DEFAULT;
+     zephyr,resolution=<12>;
+     zephyr,vref-mv=<3300>;
+    
    };
 
 };
