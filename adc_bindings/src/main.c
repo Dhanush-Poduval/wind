@@ -51,7 +51,7 @@ int main(){
      continue;
    }
    o_max=(1<<seq.resolution)-1;  
-   pulse=((uint64_t)buf*led.period)/4095;
+   pulse=led.period/2;
    printk("Raw values : %u\n",buf);
    printk("Mapped values : %u\n",pulse);
    pwm_set_pulse_dt(&led,pulse);
