@@ -3,7 +3,7 @@
 #include <zephyr/drivers/adc.h>
 #include <zephyr/drivers/pwm.h>
 
-static const int32_t sleep_time_ms=100;
+static const int32_t sleep_time_ms=1000;
 
 #define MY_ADC_CH DT_ALIAS(my_adc_channel)
 #define LIGHT_ADC_CH DT_ALIAS(light_control_channel)
@@ -43,7 +43,7 @@ int main(){
     printk("ADC NOT SET /READY \n");
     return 0;
   }
-  ret=adc_channel_setup(adc,&adc_ch);
+  ret=adc_channel_setup(adc,&light_adc);
   while(1){
    ret=adc_read(adc,&seq);
    if(ret<0){
@@ -51,7 +51,7 @@ int main(){
      continue;
    }
    o_max=(1<<seq.resolution)-1;  
-   pulse=led.period/2;
+   pulse=((uint16_t)buf * led.period )/4095;
    printk("Raw values : %u\n",buf);
    printk("Mapped values : %u\n",pulse);
    pwm_set_pulse_dt(&led,pulse);
