@@ -2,7 +2,7 @@
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/adc.h>
 #include <zephyr/drivers/pwm.h>
-
+#include <zephyr/devicetree.h>
 static const int32_t sleep_time_ms=1000;
 
 #define MY_ADC_CH DT_ALIAS(my_adc_channel)
@@ -50,8 +50,9 @@ int main(){
      printk("Could not set up the adc");
      continue;
    }
+   printk("Input channel of the potentiometer :%u\n ",light_adc.channel_id);
    o_max=(1<<seq.resolution)-1;  
-   pulse=((uint16_t)buf * led.period )/4095;
+   pulse=((uint64_t)buf * led.period )/4095;
    printk("Raw values : %u\n",buf);
    printk("Mapped values : %u\n",pulse);
    pwm_set_pulse_dt(&led,pulse);

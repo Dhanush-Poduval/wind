@@ -3,7 +3,7 @@
         my-adc = &adc1;
         my-adc-channel = &adc0_ch0;
         light-control = &adc1;
-        light-control-channel = &adc123_ch13;
+        light-control-channel = &adc123_ch1;
         my-led = &green_led;
     };
 
@@ -32,9 +32,9 @@
         zephyr,vref-mv = <3300>;
     };
 
-    adc123_ch13: channel@13 {
-        reg = <13>;
-        zephyr,gain = "ADC_GAIN_1_4";
+    adc123_ch1: channel@1 {
+        reg = <1>;
+        zephyr,gain = "ADC_GAIN_1";
         zephyr,reference = "ADC_REF_INTERNAL";
         zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
         zephyr,resolution = <12>;
