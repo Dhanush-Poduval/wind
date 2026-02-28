@@ -45,6 +45,7 @@ int main(){
   }
   ret=adc_channel_setup(adc,&light_adc);
   while(1){
+   //add random number generation for the code
    ret=adc_read(adc,&seq);
    if(ret<0){
      printk("Could not set up the adc");
