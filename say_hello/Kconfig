@@ -1,0 +1,8 @@
+#create say hello
+
+config SAY_HELLO
+	bool "Basic Print test"
+	default n
+	depends on PRINTK
+	help
+	   Adds th say_hello() function
