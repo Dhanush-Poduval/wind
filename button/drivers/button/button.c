@@ -6,12 +6,12 @@
 LOG_MODULE_REGISTER(button);
 
 static int button_init(const struct device *dev);
-static button_state_get(const struct device *dev , uint8_t *state);
+static int button_state_get(const struct device *dev , uint8_t *state);
 
-
-static int button_init(onst struct device *dev){
+//private function
+static int button_init(const struct device *dev){
 	const struct button_config *cfg=(const struct button_config)*dev->config;
-	const dtruct gpio_dt_spec *btn=&cfg->btn;
+	const struct gpio_dt_spec *btn=&cfg->btn;
 	LOG_DBG("Initialized the button id : %y\n",cfg->id);
 	if(!gpio_is_ready_dt(btn)){
 		LOG_ERR("GPIO IS NOT READY");
@@ -24,6 +24,23 @@ static int button_init(onst struct device *dev){
 	 return -ENODEV;
 	}
 	return 0;
+}
+//public function 
+
+static int button_state_get(const struct device *dev,uint8_t *state){
+	int res;
+	const struct button_config *cfg=(const struct button_config)*dev->config;
+	const struct gpio_dt_spec *btn=&cfg->btn;
+	res=gpio_pin_get_dt(btn);
+	if(res<0){
+	  LOG_ERR("Button could not be set up ");
+	  return 0;
+	}
+	else {
+	   *state=res;
+	}
+	return 0;
+
 }
 
 
