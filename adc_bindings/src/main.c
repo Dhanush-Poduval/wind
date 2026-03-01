@@ -56,7 +56,7 @@ int main(){
    }
    printk("Input channel of the potentiometer :%u\n ",light_adc.channel_id);
    o_max=(1<<seq.resolution)-1;  
-   pulse=((uint64_t)dummy_result* led.period )/1023;
+   pulse=((uint64_t)buf* led.period )/1023;
    printk("Period of the pwm led : %u\n",led.period);
    printk("Raw values : %u\n",buf);
    printk("Mapped values : %u\n",pulse);
