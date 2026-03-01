@@ -1,0 +1,6 @@
+config CUSTOM_BUTTON
+	bool "Custom button"
+	default n
+	depends on GPIO
+	help
+	  Enable the custom button driver
