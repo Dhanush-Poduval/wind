@@ -3,6 +3,7 @@
 #include <zephyr/drivers/adc.h>
 #include <zephyr/drivers/pwm.h>
 #include <zephyr/devicetree.h>
+#include <zephyr/random/random.h>
 static const int32_t sleep_time_ms=1000;
 
 #define MY_ADC_CH DT_ALIAS(my_adc_channel)
@@ -27,6 +28,7 @@ int main(){
   int16_t  vref_mv;
   uint16_t status;
   int pulse;
+  int dummy_result;
   int o_max;
   int o_min=0;
   int n_max=255;
@@ -46,6 +48,7 @@ int main(){
   ret=adc_channel_setup(adc,&light_adc);
   while(1){
    //add random number generation for the code
+   dummy_result=sys_rand32_get()%1024;
    ret=adc_read(adc,&seq);
    if(ret<0){
      printk("Could not set up the adc");
@@ -53,9 +56,10 @@ int main(){
    }
    printk("Input channel of the potentiometer :%u\n ",light_adc.channel_id);
    o_max=(1<<seq.resolution)-1;  
-   pulse=((uint64_t)buf * led.period )/4095;
+   pulse=((uint64_t)dummy_result* led.period )/1023;
    printk("Raw values : %u\n",buf);
    printk("Mapped values : %u\n",pulse);
+   printk("Dummy values : %d\n",dummy_result);
    pwm_set_pulse_dt(&led,pulse);
    k_msleep(sleep_time_ms);
   };
