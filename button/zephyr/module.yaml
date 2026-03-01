@@ -1,6 +1,6 @@
-name:button
+name: button
 build :
   cmake : .
-  kconfig:Kconfig
+  kconfig: Kconfig
   settings : 
    dts_root: .

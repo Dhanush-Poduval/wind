@@ -1,6 +1,6 @@
-description :Custom button
+description : Custom button
 compatible: "custom,button"
 properties :
   pin:
-    type:phandle
-    required:true
+    type: phandle
+    required: true
