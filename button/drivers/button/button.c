@@ -57,3 +57,5 @@ static const struct button_api button_api_funcs={
 		.id=inst      \
 	};		      \
 	DEVICE_DT_INST_DEFINE(inst , button_init,NULL , NULL , &button_config_##inst,POST_KERNEL,CONFIG_GPIO_INIT_PRIORITY,&button_api_funcs);
+
+DT_INST_FOREACH_STATUS_OKAY(BUTTON_DEFINE);
