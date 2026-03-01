@@ -48,7 +48,7 @@ int main(){
   ret=adc_channel_setup(adc,&light_adc);
   while(1){
    //add random number generation for the code
-   dummy_result=sys_rand32_get()%1024;
+   dummy_result=sys_rand64_get()%20000001;
    ret=adc_read(adc,&seq);
    if(ret<0){
      printk("Could not set up the adc");
@@ -57,10 +57,11 @@ int main(){
    printk("Input channel of the potentiometer :%u\n ",light_adc.channel_id);
    o_max=(1<<seq.resolution)-1;  
    pulse=((uint64_t)dummy_result* led.period )/1023;
+   printk("Period of the pwm led : %u\n",led.period);
    printk("Raw values : %u\n",buf);
    printk("Mapped values : %u\n",pulse);
    printk("Dummy values : %d\n",dummy_result);
-   pwm_set_pulse_dt(&led,pulse);
+   pwm_set_pulse_dt(&led,dummy_result);
    k_msleep(sleep_time_ms);
   };
   return 0;
