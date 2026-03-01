@@ -12,7 +12,7 @@ static int button_state_get(const struct device *dev , uint8_t *state);
 static int button_init(const struct device *dev){
 	const struct button_config *cfg=(const struct button_config*)dev->config;
 	const struct gpio_dt_spec *btn=&cfg->btn;
-	LOG_DBG("Initialized the button id : %y\n",cfg->id);
+	LOG_DBG("Initialized the button id : %d\n",cfg->id);
 	if(!gpio_is_ready_dt(btn)){
 		LOG_ERR("GPIO IS NOT READY");
 		return -ENODEV;
