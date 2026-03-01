@@ -1,21 +1,24 @@
-/{
-	aliases {
-		my-button-1 = &custom_button_1;
-	};
-	
-	custom_buttons {
-		compatible="custom,button";
-		custom_button_1 : {
-		  pin =<&c13>;
-		};
-	};
-	gpio-keys {
-	  compatible="custom,button";
-	  polling-mode;
-	  debounce-interval-ms=<50>;
-	  c13 : custom_key {
-	     gpios=<&gpioc 13 GPIO_ACTIVE_HIGH>;
-	  };
-	};
+/ {
+    aliases {
+        my-button-1 = &custom_button_1;
+    };
 
+    custom-buttons {
+        
+
+        custom_button_1: the_button {
+	    compatible = "custom,button";
+            pin = <&c13>;
+        };
+    };
+
+    gpio-keys {
+        compatible = "gpio-keys";
+        polling-mode;
+        debounce-interval-ms = <50>;
+
+        c13: custom_key {
+            gpios = <&gpioc 13 GPIO_ACTIVE_LOW>;
+        };
+    };
 };
