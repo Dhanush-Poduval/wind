@@ -43,4 +43,17 @@ static int button_state_get(const struct device *dev,uint8_t *state){
 
 }
 
+//marcos
 
+static const struct button_api button_api_funcs={
+	.get=button_state_get;
+
+};
+
+#define BUTTON_DEFINE(inst)   \
+			      \
+	static const struct button_config button_config_##inst={  \
+		.btn=GPIO_DT_SPEC_GET(DT_PHANDLE(DT_INST(inst,custom_button),pin),gpios),  \
+		.id=inst      \
+	};		      \
+	DEVICE_DT_INST_DEFINE(inst , button_init,NULL , NULL , &button_config_##inst,POST_KERNEL,CONFIG_GPIO_INIT_PRIORITY,&button_api_funcs);
