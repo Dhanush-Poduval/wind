@@ -1,0 +1,6 @@
+description :Custom button
+compatible: "custom,button"
+properties :
+  pin:
+    type:phandle
+    required:true
