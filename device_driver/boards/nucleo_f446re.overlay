@@ -1,6 +1,7 @@
 / {
     aliases {
         my-button-1 = &custom_button_1;
+	my-led=&led_1;
     };
 
     custom-buttons {
@@ -11,6 +12,14 @@
             pin = <&c13>;
         };
     };
+    leds: leds{
+      compatible="gpio-leds";
+      led_1: green_led{
+        gpios=<&gpioa 5 GPIO_ACTIVE_HIGH>;
+      };
+    };
+
+    
 
     gpio-keys {
         compatible = "gpio-keys";
