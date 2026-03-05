@@ -3,6 +3,11 @@
     my-button=&btn_1;
     my-led=&led_1;
   };
+  chosen {
+    zephyr,console=&usbotg_fs;
+  };
+
+
   leds: leds{
      compatible="gpio-leds";
      led_1: green_led{
@@ -17,4 +22,11 @@
   };
 
 };
-
+&usart2 {
+    status="disabled";
+};
+&usbotg_fs {
+    pinctrl-0=<&usb_otg_fs_dm_pa11 &usb_otg_fs_dp_pa12>;
+    pinctrl-names="default";
+    status="okay";
+}; 
