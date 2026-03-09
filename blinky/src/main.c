@@ -30,7 +30,7 @@ int main(void)
 	}
 
 	ret = gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE);
-	gpio_pin_set_dt(&led , 0);
+	gpio_pin_set_dt(&led , 1);
 	if (ret < 0) {
 		return 0;
 	}
