@@ -83,6 +83,7 @@ static void binary_expand_op(double in1[6], const double in2[6],
  *                double x[6]
  *                double *y
  * Return Type  : void
+ Function to use in the whole damped least squares import from matlab
  */
 void psudoinverse_function(const char endEffector[5],
                            const double velocities[6], const double config[6],
