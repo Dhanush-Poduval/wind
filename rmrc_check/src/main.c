@@ -37,7 +37,7 @@ int main() {
   char input;
   while(1){
     printk("Enter the direction to move \n");
-    scanf("%c\n",&input);
+    scanf(" %c",&input);
     if(input=='w'){
       dir=1;
     }else if(input =='a'){
