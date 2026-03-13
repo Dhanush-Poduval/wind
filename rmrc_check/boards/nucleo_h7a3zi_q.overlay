@@ -12,7 +12,7 @@
         };
     };
     stepper_motors {
-        compatible="gpio-leds";
+        compatible="custom,stepper";
         stepper_motor : first_stepper {
            label="First motor";
            direction-gpios=<&gpioe 13 GPIO_ACTIVE_LOW>;
