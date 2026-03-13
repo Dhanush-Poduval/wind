@@ -1,0 +1,13 @@
+description : Custom stepper
+compatible : "custom,stepper"
+properties :
+  label :
+    type : string
+    required : false
+  direction-gpios :
+    type : phandle
+    required : true
+  step-gpios :
+    type : phandle
+    required : true
+
