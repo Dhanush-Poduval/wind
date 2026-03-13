@@ -1,7 +1,7 @@
 / {
     aliases {
         my-led = &user_led;
-        my_stepper_motor=&stepper_motor;
+        my_stepper=&stepper_motor;
     };
 
     leds {
@@ -16,7 +16,7 @@
         stepper_motor : first_stepper {
            label="First motor";
            direction-gpios=<&gpioe 13 GPIO_ACTIVE_LOW>;
-           step-gpios=<&gpioa 3 GPIO_ACTIVE_LOW>;
+           step-gpios=<&gpioa 8 GPIO_ACTIVE_LOW>;
         };
       
     };
