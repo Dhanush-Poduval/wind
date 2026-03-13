@@ -1,14 +1,13 @@
 #ifndef MOTOR_H
-#include <zephyr/kernel.h>
-#include <zephyr/driver/gpio.h>
 #define MOTOR_H
+#include <zephyr/kernel.h>
+#include <zephyr/drivers/gpio.h>
 struct stepper_motor {
   uint16_t address;
   const struct gpio_dt_spec direction;
-  const struct gpio_dt_spec motion;
+  const struct gpio_dt_spec step;
   
 };
-
-void stepp_motion_movement(const struct stepper_motor *motor , int motion);
+int step_motion(const struct stepper_motor *motor , int dir , int pos );
   
 #endif // !DEBUG
