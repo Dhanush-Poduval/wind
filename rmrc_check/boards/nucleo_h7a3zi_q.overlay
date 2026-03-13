@@ -1,6 +1,7 @@
 / {
     aliases {
         my-led = &user_led;
+        my_stepper_motor=&stepper_motor;
     };
 
     leds {
@@ -9,5 +10,13 @@
         user_led: yellow_led {
             gpios = <&gpioe 1 GPIO_ACTIVE_HIGH>;
         };
+    };
+    stepper_motors {
+      compatible="gpio-leds";
+      stepper_motor : first_stepper {
+        label="First motor";
+        device-gpios=<&gpioe 13 GPIO_ACTIVE_LOW>;
+      };
+      
     };
 };
