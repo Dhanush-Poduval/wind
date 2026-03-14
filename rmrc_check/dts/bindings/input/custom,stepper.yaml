@@ -5,9 +5,9 @@ properties :
     type : string
     required : false
   direction-gpios :
-    type : phandle
+    type : phandle-array
     required : true
   step-gpios :
-    type : phandle
+    type : phandle-array
     required : true
 

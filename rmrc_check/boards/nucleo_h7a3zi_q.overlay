@@ -1,22 +1,23 @@
 / {
     aliases {
         my-led = &user_led;
-        my_stepper=&stepper_motor;
+        my-stepper = &stepper_motor;
     };
 
     leds {
         compatible = "gpio-leds";
 
         user_led: yellow_led {
-            gpios = <&gpioe 1 GPIO_ACTIVE_HIGH>;
+           gpios = <&gpioe 1 GPIO_ACTIVE_HIGH>;
         };
     };
     stepper_motors {
-        compatible="custom,stepper";
-        stepper_motor : first_stepper {
+
+        stepper_motor: first_stepper {
+           compatible="custom,stepper";
            label="First motor";
-           direction-gpios=<&gpioe 13 GPIO_ACTIVE_LOW>;
-           step-gpios=<&gpioa 8 GPIO_ACTIVE_LOW>;
+           direction-gpios = <&gpiob 3 GPIO_ACTIVE_LOW>;
+           step-gpios = <&gpioa 5 GPIO_ACTIVE_LOW>;
         };
       
     };

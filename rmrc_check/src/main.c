@@ -3,7 +3,7 @@
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/gpio.h>
 #include "motor.h"
-#define sleep_time_ms 1000 
+#define sleep_time_ms 3 
 
 static const struct gpio_dt_spec led=GPIO_DT_SPEC_GET(DT_ALIAS(my_led),gpios);
 static const struct gpio_dt_spec dir_motor=GPIO_DT_SPEC_GET(DT_ALIAS(my_stepper),direction_gpios);
@@ -14,7 +14,7 @@ int main() {
   int motor_dir;
   int motor_step;
   int status;
-  uint8_t dir;
+  uint8_t dir=1;
   uint8_t pos=0;
   static const struct stepper_motor my_motor = {
     .direction=dir_motor,
@@ -24,7 +24,9 @@ int main() {
   ret=gpio_pin_configure_dt(&led,GPIO_OUTPUT_ACTIVE);
   motor_dir=gpio_pin_configure_dt(&dir_motor,GPIO_OUTPUT_ACTIVE);
   motor_step=gpio_pin_configure_dt(&step_motor,GPIO_OUTPUT_ACTIVE);
-  gpio_pin_set_dt(&led,1);
+  gpio_pin_set_dt(&led,0);
+  gpio_pin_set_dt(&dir_motor,0);
+  gpio_pin_set_dt(&step_motor,0);
   if(motor_dir <0){
     printk("Device stepper nto configured properly");
   }
@@ -36,7 +38,8 @@ int main() {
   }
   char input;
   while(1){
-    printk("Enter the direction to move \n");
+    /*
+    printk("Enter the direction to move\n");
     scanf(" %c",&input);
     if(input=='w'){
       dir=1;
@@ -46,6 +49,7 @@ int main() {
       printk("Invalid key presses \n");
       return 0;
     }
+    */
     pos=step_motion(&my_motor,dir,pos);
     if((pos & 0x03) ==0){
       gpio_pin_set_dt(&led,1);
@@ -65,7 +69,6 @@ int main() {
     printk("Status of the led : %d\n",status);
     gpio_pin_set_dt(&led,status);
     */
-    k_msleep(sleep_time_ms);
   
   }
 
