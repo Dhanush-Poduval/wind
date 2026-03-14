@@ -4,7 +4,6 @@
 
 static const struct device *step_motor=DEVICE_DT_GET(DT_ALIAS(my_stepper_motor));
 static const struct device *led =DEVICE_DT_GET(DT_ALIAS(my_led0));
-
 const uint8_t sleep_time=100;
 
 int step_motion(const struct stepper_motor *motor , int dir , int pos){

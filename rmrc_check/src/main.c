@@ -42,11 +42,14 @@ int main() {
       dir=1;
     }else if(input =='a'){
       dir=0;
+    }else {
+      printk("Invalid key presses \n");
+      return 0;
     }
     pos=step_motion(&my_motor,dir,pos);
     if((pos & 0x03) ==0){
       gpio_pin_set_dt(&led,1);
-      printk("led is ON stepper moved one step");
+      printk("led is ON stepper moved one step forward or back");
     }else{
       gpio_pin_set_dt(&led,0);
       printk("led is OFF");
