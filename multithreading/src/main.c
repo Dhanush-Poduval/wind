@@ -58,8 +58,8 @@ int main(){
   k_tid_t input_tid;
   ret=gpio_pin_configure_dt(&led,GPIO_OUTPUT_ACTIVE);
   console_getline_init();
-  input_tid=k_thread_create(&input_thread,input_stack,K_THREAD_STACK_SIZEOF(input_stack),input_thread_start,NULL,NULL,NULL,8,0,K_NO_WAIT);
-  blink_tid=k_thread_create(&blink_thread,blink_stack,K_THREAD_STACK_SIZEOF(blink_stack),blink_thread_start,NULL,NULL,NULL,7,0,K_NO_WAIT);
+  input_tid=k_thread_create(&input_thread,input_stack,K_THREAD_STACK_SIZEOF(input_stack),input_thread_start,NULL,NULL,NULL,7,0,K_NO_WAIT);
+  blink_tid=k_thread_create(&blink_thread,blink_stack,K_THREAD_STACK_SIZEOF(blink_stack),blink_thread_start,NULL,NULL,NULL,8,0,K_NO_WAIT);
   while(1){
     k_msleep(1000);
   }
