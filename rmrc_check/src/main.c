@@ -2,6 +2,7 @@
 #include <zephyr/sys/printk.h>
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/gpio.h>
+#include <zephyr/console/console.h>
 #include "motor.h"
 #define sleep_time_ms 3 
 
@@ -14,8 +15,10 @@ int main() {
   int motor_dir;
   int motor_step;
   int status;
-  uint8_t dir=1;
+  uint8_t dir;
   uint8_t pos=0;
+  console_getline_init();
+  char *line=console_getline();
   static const struct stepper_motor my_motor = {
     .direction=dir_motor,
     .step=step_motor
@@ -50,6 +53,14 @@ int main() {
       return 0;
     }
     */
+    if(line[0]=='w'){
+      dir=1;
+    }else if(line[0]=='a'){
+      dir=0;
+    }else {
+      printk("Invalid character \n");
+      continue;
+    }
     pos=step_motion(&my_motor,dir,pos);
     if((pos & 0x03) ==0){
       gpio_pin_set_dt(&led,1);
@@ -69,7 +80,7 @@ int main() {
     printk("Status of the led : %d\n",status);
     gpio_pin_set_dt(&led,status);
     */
-  
+     
   }
 
 
