@@ -5,7 +5,6 @@
 #include <zephyr/console/console.h>
 #include "motor.h"
 #define sleep_time_ms 3 
-
 static const struct gpio_dt_spec led=GPIO_DT_SPEC_GET(DT_ALIAS(my_led),gpios);
 static const struct gpio_dt_spec dir_motor=GPIO_DT_SPEC_GET(DT_ALIAS(my_stepper),direction_gpios);
 static const struct gpio_dt_spec step_motor=GPIO_DT_SPEC_GET(DT_ALIAS(my_stepper),step_gpios);
@@ -18,7 +17,6 @@ int main() {
   uint8_t dir;
   uint8_t pos=0;
   console_getline_init();
-  char *line=console_getline();
   static const struct stepper_motor my_motor = {
     .direction=dir_motor,
     .step=step_motor
@@ -41,6 +39,7 @@ int main() {
   }
   char input;
   while(1){
+    char *line=console_getline();
     /*
     printk("Enter the direction to move\n");
     scanf(" %c",&input);
