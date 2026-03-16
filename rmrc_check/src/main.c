@@ -34,17 +34,14 @@ void control_thread_start(void *arg1,void *arg2 , void *arg3){
     }else {
       continue;
     }
-    if(k_msgq_put(&my_msgq,&dir,K_NO_WAIT)!=0){
-      k_msgq_purge(&my_msgq);
-      k_msgq_put(&my_msgq,&dir,K_NO_WAIT);
-    };
+    k_msgq_put(&my_msgq,&dir,K_NO_WAIT);
     /*
     k_mutex_lock(&stepper_mutex,K_FOREVER);
     rotation=(uint8_t)dir;
     k_mutex_unlock(&stepper_mutex);
     printk("Direction of rotation is : %d\n",rotation);
     */
-
+    k_msleep(10);
   }
 }
 
@@ -57,13 +54,14 @@ void motor_thread_start(void *arg1 , void *arg2 , void *arg3){
     direction_rotation=rotation;
     k_mutex_unlock(&stepper_mutex);
     */
-    k_msgq_get(&my_msgq,&direction_rotation,K_NO_WAIT);
-    if(k_msgq_get(&my_msgq,&direction_rotation,K_NO_WAIT)==0){
-      printk("The direction of the motor is : %d\n",direction_rotation);
-    }
-    pulse=step_motion(&my_motor,direction_rotation,pulse);
+    k_msgq_get(&my_msgq,&direction_rotation,K_FOREVER);
+    printk("The direction of the motor is : %d\n",direction_rotation);
+    for(int i=0;i<50;i++){
+      pulse=step_motion(&my_motor,direction_rotation,pulse);
+    };
     if((pulse & 0x03)==0){
       gpio_pin_set_dt(&led,1);
+      k_msleep(3);
     }else {
       gpio_pin_set_dt(&led,0);
     }
@@ -83,9 +81,9 @@ int main() {
   k_tid_t motor;
   k_tid_t control;
   k_msgq_init(&my_msgq,msgq_buffer,sizeof(uint8_t),10);
-  motor=k_thread_create(&motor_thred,motor_stack,K_THREAD_STACK_SIZEOF(motor_stack),motor_thread_start,NULL,NULL,NULL,7,0,K_NO_WAIT);
-  control=k_thread_create(&control_thread,control_stack,K_THREAD_STACK_SIZEOF(control_stack),control_thread_start,NULL,NULL,NULL,8,0,K_NO_WAIT);
-  gpio_pin_set_dt(&led,0);
+  motor=k_thread_create(&motor_thred,motor_stack,K_THREAD_STACK_SIZEOF(motor_stack),motor_thread_start,NULL,NULL,NULL,8,0,K_NO_WAIT);
+  control=k_thread_create(&control_thread,control_stack,K_THREAD_STACK_SIZEOF(control_stack),control_thread_start,NULL,NULL,NULL,7,0,K_NO_WAIT);
+  gpio_pin_set_dt(&led,1);
   gpio_pin_set_dt(&dir_motor,0);
   gpio_pin_set_dt(&step_motor,0);
   if(motor_dir <0){
@@ -97,11 +95,9 @@ int main() {
   if(ret<0){
     printk("Device led not configured proeprly");
   }
-  char input;
   while(1){
     /*
     char *line=console_getline();
-    /*
     printk("Enter the direction to move\n");
     scanf(" %c",&input);
     if(input=='w'){
