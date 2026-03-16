@@ -7,11 +7,14 @@
 #define sleep_time_ms 3
 #define CONTROL_STACK_SIZE 512
 #define MOTOR_STACK_SIZE 512
+char msgq_buffer[10*sizeof(uint8_t)];
+static struct k_msgq my_msgq;
+
 K_THREAD_STACK_DEFINE(control_stack,CONTROL_STACK_SIZE);
 K_THREAD_STACK_DEFINE(motor_stack,MOTOR_STACK_SIZE);
 static struct  k_thread control_thread;
 static struct k_thread motor_thred;
-K_MUTEX_DEFINE(stepper_mutex);
+//K_MUTEX_DEFINE(stepper_mutex);
 uint8_t rotation;
 static const struct gpio_dt_spec led=GPIO_DT_SPEC_GET(DT_ALIAS(my_led),gpios);
 static const struct gpio_dt_spec dir_motor=GPIO_DT_SPEC_GET(DT_ALIAS(my_stepper),direction_gpios);
@@ -31,10 +34,16 @@ void control_thread_start(void *arg1,void *arg2 , void *arg3){
     }else {
       continue;
     }
+    if(k_msgq_put(&my_msgq,&dir,K_NO_WAIT)!=0){
+      k_msgq_purge(&my_msgq);
+      k_msgq_put(&my_msgq,&dir,K_NO_WAIT);
+    };
+    /*
     k_mutex_lock(&stepper_mutex,K_FOREVER);
     rotation=(uint8_t)dir;
     k_mutex_unlock(&stepper_mutex);
     printk("Direction of rotation is : %d\n",rotation);
+    */
 
   }
 }
@@ -43,9 +52,15 @@ void motor_thread_start(void *arg1 , void *arg2 , void *arg3){
   uint8_t pulse=0;
   uint8_t direction_rotation=0;
   while(1){
+    /*
     k_mutex_lock(&stepper_mutex,K_FOREVER);
     direction_rotation=rotation;
     k_mutex_unlock(&stepper_mutex);
+    */
+    k_msgq_get(&my_msgq,&direction_rotation,K_NO_WAIT);
+    if(k_msgq_get(&my_msgq,&direction_rotation,K_NO_WAIT)==0){
+      printk("The direction of the motor is : %d\n",direction_rotation);
+    }
     pulse=step_motion(&my_motor,direction_rotation,pulse);
     if((pulse & 0x03)==0){
       gpio_pin_set_dt(&led,1);
@@ -67,6 +82,7 @@ int main() {
   motor_step=gpio_pin_configure_dt(&step_motor,GPIO_OUTPUT_ACTIVE);
   k_tid_t motor;
   k_tid_t control;
+  k_msgq_init(&my_msgq,msgq_buffer,sizeof(uint8_t),10);
   motor=k_thread_create(&motor_thred,motor_stack,K_THREAD_STACK_SIZEOF(motor_stack),motor_thread_start,NULL,NULL,NULL,7,0,K_NO_WAIT);
   control=k_thread_create(&control_thread,control_stack,K_THREAD_STACK_SIZEOF(control_stack),control_thread_start,NULL,NULL,NULL,8,0,K_NO_WAIT);
   gpio_pin_set_dt(&led,0);
