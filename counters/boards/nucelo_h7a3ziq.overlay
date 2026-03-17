@@ -1,6 +1,6 @@
 / {
     aliases {
-      my-timer=&timers1;
+      my-timer=&my_counter;
       my-led=&led67;
     };
     leds {
@@ -14,4 +14,8 @@
 &timers1 {
   status="okay";
   st,prescaler=<400>;
+  my_counter: counter {
+    compatible="st,stm32-counter";
+    status="okay";
+  };
 };
