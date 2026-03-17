@@ -8,6 +8,28 @@
 static const struct gpio_dt_spec led =GPIO_DT_SPEC_GET(DT_ALIAS(led67),gpios);
 void counter_isr(const struct device *dev,uint8_t chan_id,uint32_t ticks,void *user_data){
   struct counter_alarm_cfg *alarm_cfg =user_data;
+  uint8_t status;
   alarm_cfg->ticks=counter_us_to_ticks(dev,COUNTER_DELAY_US);
   counter_set_channel_alarm(dev,ALARM_CH_ID,alarm_cfg);
+  while(1){
+    gpio_pin_toggle(&led67);
+  };
+}
+
+
+int main(void){
+  int ret;
+  const struct device *counter_dev=DEVICE_DT_GET(DT_ALIAS(my_timer));
+  if(!device_is_ready(counter_dev)){
+    printk("Error:device is not ready \n");
+    return 0;
+  }
+  struct counter_alarm_cfg alarm_cfg={
+    .callback=counter_isr,
+    .ticks=counter_us_to_ticks(counter_dev,COUNTER_DELAY_US),
+    .user_data=&alarm_cfg,
+    .flags=0
+  };
+
+
 }
