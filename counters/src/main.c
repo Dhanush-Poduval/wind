@@ -19,6 +19,7 @@ void counter_isr(const struct device *dev,uint8_t chan_id,uint32_t ticks,void *u
 
 int main(void){
   int ret;
+  int alarm_ret;
   const struct device *counter_dev=DEVICE_DT_GET(DT_ALIAS(my_timer));
   if(!device_is_ready(counter_dev)){
     printk("Error:device is not ready \n");
@@ -30,6 +31,18 @@ int main(void){
     .user_data=&alarm_cfg,
     .flags=0
   };
+  ret=counter_start(counter_dev);
+  if(ret<0){
+    printk("counter could not be started \n");
+    return 0;
+  }
+  alarm_ret=counter_set_channel_alarm(counter_dev,ALARM_CH_ID,&alarm_cfg);
+  printk("%d\n",alarm_cfg.ticks);
+  whiel(1){
+    k_sleep(K_FOREVER);
+  };
+
+
 
 
 }
