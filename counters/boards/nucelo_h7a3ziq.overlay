@@ -1,0 +1,17 @@
+/{
+  aliases {
+    my-timer=&timer1;
+    my-led=&led67;
+  };
+  leds {
+    compatible="gpio-leds";
+    my-led: led {
+      gpios=<&gpioe 1 GPIO_ACTIVE_HIGH>;
+    };
+  };
+};
+
+&timer1 {
+  status="okay";
+  st,prescaler=<400>;
+};
