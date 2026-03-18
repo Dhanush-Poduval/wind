@@ -1,0 +1,20 @@
+/ {
+  aliases {
+    my-led=&led0;
+    turntable-imu=&imu1;
+    link1-imu=&imu2;
+    link2-imu=&imu3;
+    diffrential-imu=&imu4;
+    magnetometer-yaw=&mag1;
+    
+  };
+  leds {
+    led0: check_led {
+      compatible="gpio-leds";
+      gpios=<&gpioe 1 GPIO_ACTIVE_HIGH>;
+    };
+  };
+  sensors {
+          
+  }
+}
