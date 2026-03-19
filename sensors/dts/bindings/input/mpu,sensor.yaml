@@ -1,0 +1,14 @@
+description : Mpu integration sensor
+compatible : "mpu,sensor"
+properties :
+  label :
+    type : string
+    required : false
+  resolution :
+    type : phandle-array
+    required : false
+    default : 3
+  reg :
+    type : phandle-array
+    required : true
+
