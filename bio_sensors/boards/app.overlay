@@ -1,0 +1,35 @@
+/ {
+  aliases {
+    bio-sensor1 = &ad0;
+    bio-sensor2 = &ad1;
+    bio-sensor3 = &ad3;
+    bio-sensor4 = &ad4;
+  };
+  
+};
+
+&a0 {
+  status="okay";
+  #address-cells=<1>;
+  st,adc-prescalar=<4>;
+  ad12: channel@12{
+    reg=<12>;
+    status="okay";
+    zephyr,gain="ADC_GAIN_1";
+    zephyr,reference="ADC_REF_INTERVAL";
+    zephyr,aquisition-time=<ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS,50)>;
+    zephyr,resolution=<12>;
+    zephyr,vref-mv=<3300>;
+  };
+
+  ad123: channel@10{
+    reg=<10>;
+    status="okay";
+    zephyr,gain="ADC_GAIN_1";
+    zephyr,reference="ADC_REF_INTERVAL";
+    zephyr,aquisition-time=<ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS,50)>
+    zephyr,resolution=<12>;
+    zephyr,vref-mv=<3300>;
+  };
+
+}
