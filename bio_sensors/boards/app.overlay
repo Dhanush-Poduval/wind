@@ -9,6 +9,10 @@
     bio-sesnor5 = &adc3_6;
   };
   
+  chosen {
+    zephyr,console=&usart2;
+  };
+  
 };
 
 &adc1 {
@@ -65,7 +69,7 @@
     zephyr,vref-mv=<3300>;
   };
 
-}
+};
 
 &adc3 {
   status="okay";
@@ -79,4 +83,8 @@
     zephyr,resolution=<12>;
     zephyr,vref-mv=<3300>;
   };
-}
+};
+
+&usart2 {
+  status="okay";
+};
