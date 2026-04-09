@@ -1,9 +1,11 @@
 / {
   aliases {
+    sensors14-channel=&adc1;
     bio-sensor1 = &ad12;
     bio-sensor2 = &ad123;
     bio-sensor3 = &ad12_10;
     bio-sensor4 = &ad12_5;
+    sensors5-channel=&adc3;
     bio-sesnor5 = &adc3_6;
   };
   
