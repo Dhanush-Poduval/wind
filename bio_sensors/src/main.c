@@ -23,6 +23,7 @@ int main(){
   uint8_t status;
   uint8_t vref;
   uint8_t vref2;
+  int32_t final_voltage;
   vref=DT_PROP(ADC_CHANNEL_1,zephyr_vref_mv);
   vref2=DT_PROP(ADC_CHANNEL_2,zephyr_vref_mv);
   struct adc_sequence seq={
@@ -47,8 +48,12 @@ int main(){
       printk("Error in reading value of sensor 1");
       return;
     }
+    final_voltage=(buf*vref)/(1<<seq.resolution);
     printk("The value read by the sensor is : %u\n",buf);
+    printk("The resultant voltage : %u\n",final_voltage);
+
+    m_sleep(1000);
   }
-  
+  return 0;
 
 }
