@@ -41,7 +41,7 @@ int main(){
   if(!device_is_ready(bio_sen1)){
     printk("Bio sensor 1 not configured properly \n");
   };
-  ret=adc_channel_setup(adc,&adc_channel_2);
+  ret=adc_channel_setup(bio_sen1,&adc_channel_1);
   while(1){
     ret=adc_read(bio_sen1,&seq);
     if(ret<0){

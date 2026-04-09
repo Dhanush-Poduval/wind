@@ -1,12 +1,12 @@
 / {
   aliases {
-    sensors14-channel=&adc1;
-    bio-sensor1 = &ad12;
-    bio-sensor2 = &ad123;
+    sensors14-channel = &adc1;
+    sensors5-channel = &adc2;
+    bio-sensor1 = &ad12_12;
+    bio-sensor2 = &ad123_10;
     bio-sensor3 = &ad12_10;
     bio-sensor4 = &ad12_5;
-    sensors5-channel=&adc3;
-    bio-sesnor5 = &adc3_6;
+    bio-sensor5 = &adc3_6;
   };
   
   chosen {
@@ -18,33 +18,35 @@
 &adc1 {
   status="okay";
   #address-cells=<1>;
-  st,adc-prescalar=<4>;
-  ad12: channel@12{
+  #size-cells=<0>;
+  st,adc-clock-source = "ASYNC";
+  st,adc-prescaler=<4>;
+  ad12_12: channel@c{
     reg=<12>;
     status="okay";
     zephyr,gain="ADC_GAIN_1";
-    zephyr,reference="ADC_REF_INTERVAL";
-    zephyr,aquisition-time=<ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS,50)>;
+    zephyr,reference="ADC_REF_INTERNAL";
+    zephyr,acquisition-time=<ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS,50)>;
     zephyr,resolution=<12>;
     zephyr,vref-mv=<3300>;
   };
 
-  ad123: channel@10{
+  ad123_10: channel@a{
     reg=<10>;
     status="okay";
     zephyr,gain="ADC_GAIN_1";
-    zephyr,reference="ADC_REF_INTERVAL";
-    zephyr,aquisition-time=<ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS,50)>
+    zephyr,reference="ADC_REF_INTERNAL";
+    zephyr,acquisition-time=<ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS,50)>;
     zephyr,resolution=<12>;
     zephyr,vref-mv=<3300>;
   };
 
-  ad12_10: channel@13{
+  ad12_10: channel@d{
     reg=<13>;
     status="okay";
     zephyr,gain="ADC_GAIN_1";
-    zephyr,reference="ADC_REF_INTERVAL";
-    zephyr,aquisition-time=<ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS,50)>
+    zephyr,reference="ADC_REF_INTERNAL";
+    zephyr,acquisition-time=<ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS,50)>;
     zephyr,resolution=<12>;
     zephyr,vref-mv=<3300>;
 
@@ -53,33 +55,26 @@
   ad12_5: channel@5{
     reg=<5>;
     zephyr,gain="ADC_GAIN_1";
-    zephyr,reference="ADC_REF_INTERVAL";
-    zephyr,aquisition-time=<ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS,50)>
+    zephyr,reference="ADC_REF_INTERNAL";
+    zephyr,acquisition-time=<ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS,50)>;
     zephyr,resolution=<12>;
     zephyr,vref-mv=<3300>;
 
-  };
-
-  adc123_12: channel@12{
-    reg=<12>;
-    zephyr,gain="ADC_GAIN_1";
-    zephyr,reference="ADC_REF_INTERVAL";
-    zephyr,aquisition-time=<ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS,50)>
-    zephyr,resolution=<12>;
-    zephyr,vref-mv=<3300>;
   };
 
 };
 
-&adc3 {
+&adc2 {
   status="okay";
   #address-cells=<1>;
-  st,adc-prescalar = <4>;
+  #size-cells=<0>;
+  st,adc-clock-source = "ASYNC";
+  st,adc-prescaler = <4>;
   adc3_6: channel@6{
     reg=<6>;
     zephyr,gain="ADC_GAIN_1";
-    zephyr,reference="ADC_REF_INTERVAL";
-    zephyr,aquisition-time=<ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS,50)>
+    zephyr,reference="ADC_REF_INTERNAL";
+    zephyr,acquisition-time=<ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS,50)>;
     zephyr,resolution=<12>;
     zephyr,vref-mv=<3300>;
   };
@@ -87,4 +82,6 @@
 
 &usart2 {
   status="okay";
+  pinctrl-0=<&usart2_tx_pd5 &usart2_rx_pd6>;
+  pinctrl-names="default";
 };
