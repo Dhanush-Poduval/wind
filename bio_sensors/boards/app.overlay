@@ -2,7 +2,7 @@
   aliases {
     sensors14-channel = &adc1;
     sensors5-channel = &adc2;
-    bio-sensor1 = &ad12_12;
+    bio-sensor1 = &ad12_15;
     bio-sensor2 = &ad123_10;
     bio-sensor3 = &ad12_10;
     bio-sensor4 = &ad12_5;
@@ -19,10 +19,10 @@
   status="okay";
   #address-cells=<1>;
   #size-cells=<0>;
-  st,adc-clock-source = "ASYNC";
+  st,adc-clock-source = "SYNC";
   st,adc-prescaler=<4>;
-  ad12_12: channel@c{
-    reg=<12>;
+  ad12_15: channel@f{
+    reg=<15>;
     status="okay";
     zephyr,gain="ADC_GAIN_1";
     zephyr,reference="ADC_REF_INTERNAL";
@@ -68,7 +68,7 @@
   status="okay";
   #address-cells=<1>;
   #size-cells=<0>;
-  st,adc-clock-source = "ASYNC";
+  st,adc-clock-source = "SYNC";
   st,adc-prescaler = <4>;
   adc3_6: channel@6{
     reg=<6>;
