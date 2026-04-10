@@ -9,10 +9,6 @@
     bio-sensor5 = &adc3_6;
   };
   
-  chosen {
-    zephyr,console=&usart2;
-  };
-  
 };
 
 &adc1 {

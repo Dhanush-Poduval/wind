@@ -23,7 +23,7 @@ int main(){
   int ret;
   uint16_t buf;
   uint8_t status;
-  uint8_t vref;
+  uint16_t vref;
   uint8_t vref2;
   int32_t final_voltage;
   vref=DT_PROP(ADC_CHANNEL_1,zephyr_vref_mv);
@@ -51,7 +51,7 @@ int main(){
     ret=adc_read(bio_sen1,&seq);
     if(ret<0){
       printk("Error in reading value of sensor 1");
-      return;
+      return 0;
     }
     final_voltage=(buf*vref)/(1<<seq.resolution);
     printk("The value read by the sensor is : %u\n",buf);
