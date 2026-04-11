@@ -4,17 +4,18 @@
     link-2=&pwm_motor2;
   };
   pwm-motors {
-    compatible="pwm,motors";
     pwm_motor1: link1{
+      compatible="pwm,motors";
       label="Link1";
-      pwms=<&pwm12 1 PWM_MSEC(20) (PWM_POLARITY_NORMAL)>;
+      pwms=<&pwm12 1 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
       min-pulse=<PWM_USEC(1100)>;
       max-pulse=<PWM_USEC(1900)>;
     };
 
     pwm_motor2: link2{
+      compatible="pwm,motors";
       label="Link2";
-      pwms=<&pwm12 2 PWM_MSEC(20) (PWM_POLARITY_NORMAL)>;
+      pwms=<&pwm12 2 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
       min-pulse=<PWM_USEC(1100)>;
       max-pulse=<PWM_USEC(1900)>;
     };
@@ -23,8 +24,8 @@
 
 &timers12 {
   status="okay";
-  st,prescalar=<5599>;
-  pwm12: pwms{
+  st,prescaler=<5599>;
+  pwm12: pwm{
     status="okay";
     pinctrl-0=<&tim12_ch1_pb14 &tim12_ch2_pb15>;
     pinctrl-names="default";

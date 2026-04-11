@@ -1,5 +1,5 @@
 description : PWM Motor
-compatible : pwm,motor 
+compatible : pwm,motors 
 properties :
   label : 
     type : string 
