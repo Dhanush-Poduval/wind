@@ -7,8 +7,14 @@
     bio-sensor3 = &ad12_10;
     bio-sensor4 = &ad12_5;
     bio-sensor5 = &adc3_6;
+    dth11-sensor= &digital_bio;
   };
-  
+  digital: digitals {
+    compatible="gpio-pins";
+    &digital_bio: digital_sensor{
+      gpios=<&gpioc 3 GPIO_ACTIVE_LOW>;
+    };
+  };
 };
 
 &adc1 {
