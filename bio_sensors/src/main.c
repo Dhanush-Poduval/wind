@@ -4,6 +4,7 @@
 #include <zephyr/drivers/adc.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/sensor.h>
+#include "dth11.h"
 
 static const int sleep_time_ms =1000;
 
@@ -12,6 +13,7 @@ static const int sleep_time_ms =1000;
 static const struct adc_channel_cfg adc_channel_1=ADC_CHANNEL_CFG_DT(ADC_CHANNEL_1);
 //static const struct adc_channel_cfg adc_channel_2=ADC_CHANNEL_CFG_DT(ADC_CHANNEL_2);
 static const struct device *bio_sen1=DEVICE_DT_GET(DT_ALIAS(sensors14_channel));
+static const struct gpio_dt_spec dht_sensor=GPIO_DT_SPEC_GET(DT_ALIAS(dth11_sensor),gpios);
 /*
 static const struct device *bio_sen2=DEVICE_DT_GET(DT_ALIAS(bio_sensor2));
 static const struct device *bio_sen3=DEVICE_DT_GET(DT_ALIAS(bio_sensor3));
@@ -21,7 +23,9 @@ static const struct device *bio_sen5=DEVICE_DT_GET(DT_ALIAS(bio_sensor5));
 
 int main(){
   int ret;
+  int dht_res;
   uint16_t buf;
+  int dth11_data[5];
   uint8_t status;
   uint16_t vref;
   uint8_t vref2;
@@ -54,8 +58,10 @@ int main(){
       return 0;
     }
     final_voltage=(buf*vref)/(1<<seq.resolution);
-    printk("The value read by the sensor is : %u\n",buf);
+    dht_res=read_sensor_value(dht_sensor,dth11_data);
+    printk("The value read by the Analog sensor is : %u\n",buf);
     printk("The resultant voltage : %u\n",final_voltage);
+    printk("The value read by the dth sensor is : %d\n",dht_res);
 
     k_msleep(sleep_time_ms);
   }
