@@ -8,9 +8,9 @@
 
 static const int sleep_time_ms =1000;
 
-#define ADC_CHANNEL_1 DT_ALIAS(bio_sensor4)
+#define MY_ADC_CHANNEL_1 DT_ALIAS(bio_sensor4)
 //#define ADC_CHANNEL_2 DT_ALIAS(sensors5)
-static const struct adc_channel_cfg adc_channel_1=ADC_CHANNEL_CFG_DT(ADC_CHANNEL_1);
+static const struct adc_channel_cfg adc_channel_1=ADC_CHANNEL_CFG_DT(MY_ADC_CHANNEL_1);
 //static const struct adc_channel_cfg adc_channel_2=ADC_CHANNEL_CFG_DT(ADC_CHANNEL_2);
 static const struct device *bio_sen1=DEVICE_DT_GET(DT_ALIAS(sensors14_channel));
 static const struct gpio_dt_spec dht_sensor=GPIO_DT_SPEC_GET(DT_ALIAS(dth11_sensor),gpios);
@@ -30,13 +30,13 @@ int main(){
   uint16_t vref;
   uint8_t vref2;
   int32_t final_voltage;
-  vref=DT_PROP(ADC_CHANNEL_1,zephyr_vref_mv);
+  vref=DT_PROP(MY_ADC_CHANNEL_1,zephyr_vref_mv);
   //vref2=DT_PROP(ADC_CHANNEL_2,zephyr_vref_mv);
   struct adc_sequence seq={
     .channels=BIT(adc_channel_1.channel_id),
     .buffer=&buf,
     .buffer_size=sizeof(buf),
-    .resolution=DT_PROP(ADC_CHANNEL_1,zephyr_resolution),
+    .resolution=DT_PROP(MY_ADC_CHANNEL_1,zephyr_resolution),
   };
   /*
   struct adc_sequence seq2={
@@ -58,7 +58,7 @@ int main(){
       return 0;
     }
     final_voltage=(buf*vref)/(1<<seq.resolution);
-    dht_res=read_sensor_value(dht_sensor,dth11_data);
+    dht_res=read_sensor_values(dht_sensor,dth11_data);
     printk("The value read by the Analog sensor is : %u\n",buf);
     printk("The resultant voltage : %u\n",final_voltage);
     printk("The value read by the dth sensor humidity is : %d.%d\n",dth11_data[0],dth11_data[1]);

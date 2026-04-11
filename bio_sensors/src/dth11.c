@@ -3,6 +3,7 @@
 #include <zephyr/drivers/gpio.h>
 
 int read_sensor_values(struct gpio_dt_spec dev , int data[5]){
+  int j;
   uint32_t start=0;
   for(int i=0;i<5;i++){
     data[i]=0;

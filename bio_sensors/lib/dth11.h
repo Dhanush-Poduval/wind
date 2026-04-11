@@ -1,5 +1,5 @@
-#define DTH11_SENSOR_H
 #ifndef DTH11_SENSOR_H
+#define DTH11_SENSOR_H 
 #include <zephyr/kernel.h> 
 #include <zephyr/drivers/gpio.h>
 
