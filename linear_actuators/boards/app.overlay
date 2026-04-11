@@ -4,7 +4,7 @@
     link-2=&pwm_motor2;
   };
   pwm-motors {
-    compatible="pwm-motors";
+    compatible="pwm,motors";
     pwm_motor1: link1{
       label="Link1";
       pwms=<&pwm12 1 PWM_MSEC(20) (PWM_POLARITY_NORMAL)>;

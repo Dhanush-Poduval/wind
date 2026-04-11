@@ -1,0 +1,16 @@
+description : PWM Motor
+compatible : pwm,motor 
+properties :
+  label : 
+    type : string 
+    required : false
+  pwms :
+    type : phandle-array
+    required : true
+  min-pulse :
+    type : int
+    required : true 
+  max-pulse :
+    type : int 
+    required : true 
+  
