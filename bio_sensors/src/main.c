@@ -61,7 +61,8 @@ int main(){
     dht_res=read_sensor_value(dht_sensor,dth11_data);
     printk("The value read by the Analog sensor is : %u\n",buf);
     printk("The resultant voltage : %u\n",final_voltage);
-    printk("The value read by the dth sensor is : %d\n",dht_res);
+    printk("The value read by the dth sensor humidity is : %d.%d\n",dth11_data[0],dth11_data[1]);
+    printk("The value read by the dht sensor temperature : %d.%d\n",dth11_data[2],dth11_data[3]);
 
     k_msleep(sleep_time_ms);
   }
