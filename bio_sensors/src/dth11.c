@@ -3,6 +3,9 @@
 #include <zephyr/drivers/gpio.h>
 
 int read_sensor_values(struct gpio_dt_spec dev , int data[5]){
+  if(!gpio_is_ready_dt(&dev)){
+    printk("The sensor is not configured\n");
+  }
   int j;
   uint32_t start=0;
   for(int i=0;i<5;i++){

@@ -10,9 +10,10 @@
     dth11-sensor= &digital_bio;
   };
   digital: digitals {
-    compatible="gpio-keys";
     digital_bio: digital_sensor{
-      gpios=<&gpioc 3 GPIO_ACTIVE_LOW>;
+      compatible="aosong,dht";
+      status="okay";
+      dio-gpios=<&gpiod 0 GPIO_ACTIVE_LOW>;
     };
   };
 };
