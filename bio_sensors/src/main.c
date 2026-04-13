@@ -57,7 +57,7 @@ int main(){
       printk("Error in reading value of sensor 1");
       return 0;
     }
-    final_voltage=(buf*vref)/(1<<seq.resolution);
+    final_voltage=(buf*vref)/((1<<seq.resolution)-1);
     dht_res=read_sensor_values(dht_sensor,dth11_data);
     printk("The value read by the Analog sensor is : %u\n",buf);
     printk("The resultant voltage : %u\n",final_voltage);
