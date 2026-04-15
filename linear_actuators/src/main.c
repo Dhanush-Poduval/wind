@@ -18,18 +18,22 @@ enum direction {
 };
 
 int main(){
-  uint32_t pulse_width=minpulse;
-  enum direction dir=UP;
+  uint32_t pulse_width=maxpulse;
+  enum direction dir=DOWN;
   int ret;
   if (!pwm_is_ready_dt(&link1)) {
 		printk("Error: PWM device is not ready\n");
 		return 0;
 	};
   while(1){
-    printk("Moving the pwms\n");
+    printk("min: %d , max:%d \n",minpulse,maxpulse);
+    printk("pulse width %d",pulse_width);
     ret=pwm_set_pulse_dt(&link1,pulse_width);
+    if(ret<0){
+      printk("Error is configuration : %d\n",ret);
+    };
     if(dir==DOWN){
-      if(pulse_width<minpulse){
+      if(pulse_width<=minpulse){
         dir=UP;
         pulse_width=minpulse;
       } else {
@@ -37,11 +41,12 @@ int main(){
       };
     } else {
       pulse_width+=STEP;
-      if(pulse_width>maxpulse){
+      if(pulse_width>=maxpulse){
         dir=DOWN;
         pulse_width=maxpulse;
       };
     };
+    k_msleep(200);
   };
   return 0;
 }
