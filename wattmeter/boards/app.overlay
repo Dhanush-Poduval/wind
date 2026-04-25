@@ -5,11 +5,11 @@
 
 };
 &pinctrl { 
-  i2c1_scl_pb6: pb6{
+  i2c1_scl_pb6: i2c1_scl_pb6{
     pinmux=<STM32_PINMUX('B',6,AF4)>;
     bias-pull-up;
   };
-  i2c1_sda_pb9: pb9{
+  i2c1_sda_pb9: i2c1_sda_pb9{
     pinmux=<STM32_PINMUX('B',9,AF4)>;
   };
 };
@@ -17,10 +17,11 @@
   status="okay";
   pinctrl-0=<&i2c1_scl_pb6 &i2c1_sda_pb9>;
   pinctrl-names="default";
-  mt_0: mt_0@0x40{
+  mt_0: mt_0@40{
     compatible="ti,ina219";
-    lsb-microamp=<250>;
-    shunt-milliohm=<10>;
+    status="okay";
+    lsb-microamp=<92>;
+    shunt-milliohm=<100>;
     reg=<0x40>;
 
   };
