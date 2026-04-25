@@ -9,7 +9,7 @@
 
 static const int sleep_time_ms =1000;
 
-#define MY_ADC_CHANNEL_1 DT_ALIAS(bio_sensor4)
+#define MY_ADC_CHANNEL_1 DT_ALIAS(bio_sensor1)
 //#define ADC_CHANNEL_2 DT_ALIAS(sensors5)
 struct sensor_value temp,humidity;
 static const struct adc_channel_cfg adc_channel_1=ADC_CHANNEL_CFG_DT(MY_ADC_CHANNEL_1);
@@ -60,11 +60,12 @@ int main(){
       printk("Error in reading value of sensor 1");
       return 0;
     }
-    final_voltage=(buf*vref)/((1<<seq.resolution)-1);
+    printk("%d\n",buf);
+    //final_voltage=(buf*vref)/((1<<seq.resolution)-1);
     //dht_res=sensor_channel_get(dht_sensor,SENSOR_CHAN_AMBIENT_TEMP,&temp);
     //dht_res=sensor_channel_get(dht_sensor,SENSOR_CHAN_HUMIDITY,&humidity);
-    printk("The value read by the Analog sensor is : %u\n",buf);
-    printk("The resultant voltage : %u\n",final_voltage);
+    //printk("The value read by the Analog sensor is : %u\n",buf);
+    //printk("The resultant voltage : %u\n",final_voltage);
     //printk("The value read by the dth sensor humidity is : %d.%d\n",temp.val1,temp.val2/1000);
     //printk("The value read by the dht sensor temperature : %d.%d\n",humidity.val1,humidity.val2/1000);
 

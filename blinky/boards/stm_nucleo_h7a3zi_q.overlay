@@ -1,8 +1,12 @@
 /{
         aliases{
           my-led=&led_1;
+          my-uart=&uart5;
         };
-
+        chosen {
+          zephyr,console=&uart5;
+          zephyr,shell-uart = &uart5;
+        };
         leds: leds {
           compatible="gpio-leds";
           led_1:d5{
@@ -13,3 +17,9 @@
 
 };
 
+&uart5{
+	pinctrl-0 = <&uart5_tx_pc12 &uart5_rx_pd2>;
+	pinctrl-names = "default";
+	status = "okay";
+	current-speed = <115200>;
+};

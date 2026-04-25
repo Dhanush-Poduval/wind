@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/gpio.h>
+#include<zephyr/drivers/uart.h>
 #include "add.h"
 /* 1000 msec = 1 sec */
 #define SLEEP_TIME_MS   1000
@@ -19,6 +20,7 @@
  * See the sample documentation for information on how to fix this.
  */
 static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(DT_ALIAS(my_led), gpios);
+static const struct device *my_usart=DEVICE_DT_GET(DT_ALIAS(my_uart));
 
 int main(void)
 {
@@ -28,25 +30,34 @@ int main(void)
 	if (!gpio_is_ready_dt(&led)) {
 		return 0;
 	}
+  if (!device_is_ready(my_usart)) {
+    printk("UART not ready!\n");
+    return 0;
+  }
 
 	ret = gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE);
 	gpio_pin_set_dt(&led , 1);
 	if (ret < 0) {
 		return 0;
 	}
-	/*
-
-       	while (1) {
-		ret = gpio_pin_toggle_dt(&led);
+  unsigned char test='a';
+  unsigned char c;
+  while (1) {
 		if (ret < 0) {
 			return 0;
 		}
 
 		led_state = !led_state;
-		printf("LED state: %s\n", led_state ? "ON" : "OFF");
+    uart_poll_out(my_usart,test);
+    int err = uart_poll_in(my_usart,&c);
+    if(err==0){
+      if(c=='a'){
+        gpio_pin_toggle_dt(&led);
+      }
+    }
+    
 		add();
 		k_msleep(SLEEP_TIME_MS);
 	}
-*/
 	return 0;
 }
