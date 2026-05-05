@@ -6,7 +6,8 @@
     bio-sensor2 = &ad123_10;
     bio-sensor3 = &ad12_10;
     bio-sensor4 = &ad12_5;
-    bio-sensor5 = &adc3_6;
+    bio-sensor5 = &adc123_12;
+    bio-sensor6=&adc3_6;
     dth11-sensor= &digital_bio;
   };
   digital: digitals {
@@ -64,6 +65,14 @@
     zephyr,vref-mv=<3300>;
 
   };
+  adc123_12: channel@c{
+    reg=<12>;
+    zephyr,gain="ADC_GAIN_1";
+    zephyr,reference="ADC_REF_INTERNAL";
+    zephyr,acquisition-time=<ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS,50)>;
+    zephyr,resolution=<12>;
+    zephyr,vref-mv=<3300>;
+  };
 
 };
 
@@ -82,7 +91,13 @@
     zephyr,vref-mv=<3300>;
   };
 };
-
+&zephyr_udc0 {
+	cdc_acm_uart0: cdc_acm_uart0 {
+		compatible = "zephyr,cdc-acm-uart";
+		status = "okay";
+		current-speed = <9600>;
+	};
+};
 &usart2 {
   status="okay";
   pinctrl-0=<&usart2_tx_pd5 &usart2_rx_pd6>;

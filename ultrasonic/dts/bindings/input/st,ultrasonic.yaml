@@ -1,0 +1,13 @@
+description: Custom ultrasonic 
+compatible: "st,ultrasonic"
+properties:
+  label:
+    type: string
+    required: false
+  trig-gpios:
+    type: phandle-array
+    required: true
+  echo-gpios:
+    type: phandle-array 
+    required: true 
+

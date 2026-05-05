@@ -1,0 +1,22 @@
+/ {
+  aliases {
+    my-led=&led0;
+    my-ultrasonic=&ultrasonic;
+  };
+  leds {
+    compatible="gpio-leds";
+    led0: yellow_led{
+      gpios=<&gpioe 1 GPIO_ACTIVE_LOW>;
+
+    };
+  };
+  ultrasonic {
+    ultrasonic: sonic {
+      compatible="st,ultrasonic";
+      label="The main ultrasonic sensor ";
+      trig-gpios=<&gpioa 5 GPIO_ACTIVE_LOW>;
+      echo-gpios=<&gpiob 3 GPIO_ACTIVE_LOW>;
+    };
+  };
+  
+};

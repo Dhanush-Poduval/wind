@@ -11,6 +11,7 @@
   };
   i2c1_sda_pb9: i2c1_sda_pb9{
     pinmux=<STM32_PINMUX('B',9,AF4)>;
+    bias-pull-up;
   };
 };
 &i2c1 {
@@ -20,8 +21,8 @@
   mt_0: mt_0@40{
     compatible="ti,ina219";
     status="okay";
-    lsb-microamp=<92>;
-    shunt-milliohm=<100>;
+    lsb-microamp=<244>;
+    shunt-milliohm=<10>;
     reg=<0x40>;
 
   };
